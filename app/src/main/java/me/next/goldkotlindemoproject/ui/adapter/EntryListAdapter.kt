@@ -18,7 +18,7 @@ import me.next.goldkotlindemoproject.model.Entry
  * GoldKotlinDemoProject
  */
 //https://kotlinlang.org/docs/reference/classes.html
-class EntryListAdapter(val entryList: List<Entry>, val itemClick: OnItemClickListener) : RecyclerView.Adapter<EntryListAdapter.MyViewHolder>() {
+class EntryListAdapter(val entryList: List<Entry>, val itemClick: (Entry) -> Unit) : RecyclerView.Adapter<EntryListAdapter.MyViewHolder>() {
 
     override fun getItemCount() = entryList.size
 
@@ -31,7 +31,7 @@ class EntryListAdapter(val entryList: List<Entry>, val itemClick: OnItemClickLis
         holder.bindViewHolder(entryList[position])
     }
 
-    class MyViewHolder(itemView: View, val itemClick: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View, val itemClick: (Entry) -> Unit) : RecyclerView.ViewHolder(itemView) {
         fun bindViewHolder(entry: Entry) {
             with(entry) {
                 itemView.tvTitle.text = getString("title")
@@ -54,10 +54,6 @@ class EntryListAdapter(val entryList: List<Entry>, val itemClick: OnItemClickLis
                 itemView.setOnClickListener { itemClick(entry) }
             }
         }
-    }
-
-    interface OnItemClickListener {
-        operator fun invoke(entry: Entry)
     }
 
 }

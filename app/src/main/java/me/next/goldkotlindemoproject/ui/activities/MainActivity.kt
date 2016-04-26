@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.avos.avoscloud.AVQuery
+import kotlinx.android.synthetic.main.activity_main.*
 import me.next.goldkotlindemoproject.R
 import me.next.goldkotlindemoproject.model.Entry
 import me.next.goldkotlindemoproject.ui.adapter.EntryListAdapter
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,14 +29,14 @@ class MainActivity : AppCompatActivity() {
             query.limit(50)
             entries = query.find()
             uiThread {
-                recyclerView.adapter = EntryListAdapter(entries, object : EntryListAdapter.OnItemClickListener {
-                    override fun invoke(entry: Entry) {
-                        startActivity(
-                                Intent(applicationContext, EntryWebviewActivity :: class.java)
-                                .putExtra(EntryWebviewActivity.ENTRY_URL, entry.getString("url")))
-                    }
-
-                })
+//              val adapter = UserListAdapter(entries, { view -> toast("") })
+//              val adapter = UserListAdapter(entries, { toast("") })
+                val adapter = EntryListAdapter(entries) {
+                    startActivity(
+                            Intent(applicationContext, EntryWebviewActivity :: class.java)
+                                    .putExtra(EntryWebviewActivity.ENTRY_URL, it.getString("url")))
+                }
+                recyclerView.adapter = adapter
             }
         }
     }
