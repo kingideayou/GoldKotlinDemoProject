@@ -4,21 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.avos.avoscloud.AVQuery
 import me.next.goldkotlindemoproject.R
 import me.next.goldkotlindemoproject.model.Entry
 import me.next.goldkotlindemoproject.ui.adapter.EntryListAdapter
 import org.jetbrains.anko.async
-import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerView : RecyclerView = find(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(applicationContext)
 
         async() {
