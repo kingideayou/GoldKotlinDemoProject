@@ -1,5 +1,6 @@
 package me.next.goldkotlindemoproject.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -30,7 +31,14 @@ class MainActivity : AppCompatActivity() {
             query.limit(50)
             entries = query.find()
             uiThread {
-                recyclerView.adapter = EntryListAdapter(entries)
+                recyclerView.adapter = EntryListAdapter(entries, object : EntryListAdapter.OnItemClickListener {
+                    override fun invoke(entry: Entry) {
+                        startActivity(
+                                Intent(applicationContext, EntryWebviewActivity :: class.java)
+                                .putExtra(EntryWebviewActivity.ENTRY_URL, entry.getString("url")))
+                    }
+
+                })
             }
         }
     }

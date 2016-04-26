@@ -20,12 +20,13 @@ import org.jetbrains.anko.find
  * GoldKotlinDemoProject
  */
 //https://kotlinlang.org/docs/reference/classes.html
-class EntryListAdapter(val entryList: List<Entry>) : RecyclerView.Adapter<EntryListAdapter.MyViewHolder>() {
+class EntryListAdapter(val entryList: List<Entry>, val itemClick: OnItemClickListener) : RecyclerView.Adapter<EntryListAdapter.MyViewHolder>() {
 
     override fun getItemCount() = entryList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder? {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_entry, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_entry, parent, false)
+        return MyViewHolder(view, itemClick)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -33,7 +34,7 @@ class EntryListAdapter(val entryList: List<Entry>) : RecyclerView.Adapter<EntryL
     }
 
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View, val itemClick: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         val ivScreenshot : ImageView
         val ivAvatar : ImageView
@@ -66,7 +67,12 @@ class EntryListAdapter(val entryList: List<Entry>) : RecyclerView.Adapter<EntryL
                             }
                         })
             }
+            itemView.setOnClickListener { itemClick(entry) }
         }
+    }
+
+    interface OnItemClickListener {
+        operator fun invoke(entry: Entry)
     }
 
 }
